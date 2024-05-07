@@ -1,6 +1,1 @@
 @ChronoPiller.Api_HostAddress = http://localhost:5168
-
-GET {{ChronoPiller.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
