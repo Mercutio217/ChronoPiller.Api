@@ -1,19 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <InvariantGlobalization>true</InvariantGlobalization>
+        <InvariantGlobalization>false</InvariantGlobalization>
+        <RootNamespace>ChronoPiller.Api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Mapster" Version="7.3.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ChronoPiller.Api.Core\ChronoPiller.Api.Core.csproj" />
-      <ProjectReference Include="..\ChronoPiller.Infrastructure\ChronoPiller.Infrastructure.csproj" />
+      <ProjectReference Include="..\ChronoPiller.Api.Infrastructure\ChronoPiller.Api.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Filters" />
     </ItemGroup>
 
 </Project>

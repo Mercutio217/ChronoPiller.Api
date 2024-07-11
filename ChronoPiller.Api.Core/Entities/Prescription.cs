@@ -2,7 +2,7 @@
 
 public class Prescription : BaseEntity
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public string DoctorName { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? AcquireDate { get; set; }

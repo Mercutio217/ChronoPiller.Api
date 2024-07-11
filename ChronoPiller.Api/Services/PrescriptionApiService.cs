@@ -2,6 +2,7 @@
 using ChronoPiller.Api.Core.Interface;
 using ChronoPiller.Api.Interfaces;
 using ChronoPiller.Api.Models;
+using Mapster;
 
 namespace ChronoPiller.Api.Services;
 
@@ -16,49 +17,38 @@ public class PrescriptionApiService : IPrescriptionApiService
         _logger = logger;
     }
 
-    public async Task<Prescription> CreatePrescription(PrescriptionDto prescription)
+    public Task<Prescription> CreatePrescription(PrescriptionCreateDto prescription)
     {
-        var model = new Prescription()
+        return Execute(async () =>
         {
-            Items = prescription.Items?.Select(pres => new PrescriptionItem()
-            {
-                Times = new(),
-                Dose = 1,
-                MedicationName = "test"
-            }).ToList(),
-            AcquireDate = prescription.AcquireDate,
-            DoctorName = prescription.DoctorName,
-            StartDate = prescription.StartDate,
-            UserId = prescription.UserId
-        };
-        return await _prescriptionService.CreatePrescription(model);
+            Prescription model =
+                prescription.Adapt<Prescription>();
+            return await _prescriptionService.CreatePrescription(model);
+        });
     }
 
-    public async Task<Prescription> GetPrescriptionById(int id) => 
-        await Execute(async () => await _prescriptionService.GetPrescriptionById(id));
+    public async Task<PrescriptionDto> GetPrescriptionById(Guid id) => 
+        await Execute(async () => (await _prescriptionService.GetPrescriptionById(id)).Adapt<PrescriptionDto>());
 
-    public async Task<List<Prescription>> GetPrescriptionByUserId(int userId) => 
-        await Execute(async () => await _prescriptionService.GetPrescriptionByUserId(userId));
-
-    public async Task<Prescription> UpdatePrescription(PrescriptionDto prescription)
+    public async Task<List<PrescriptionDto>> GetPrescriptionsByUserId(Guid userId)
     {
-        var model = new Prescription()
+        return await Execute(async () =>
         {
-            Items = prescription.Items?.Select(pres => new PrescriptionItem()
-            {
-                Times = new(),
-                Dose = 1,
-                MedicationName = "test"
-            }).ToList(),
-            AcquireDate = prescription.AcquireDate,
-            DoctorName = prescription.DoctorName,
-            StartDate = prescription.StartDate,
-            UserId = prescription.UserId
-        };
-        return await Execute(async () => await _prescriptionService.UpdatePrescription(model));
+            List<Prescription> result = await _prescriptionService.GetPrescriptionByUserId(userId);
+            return result.Adapt<List<PrescriptionDto>>();
+        });
     }
 
-    public async Task DeletePrescription(int id) => 
+    public async Task<List<PrescriptionDto>> GetPrescriptionByUserId(Guid userId) => 
+        await Execute(async () => (await _prescriptionService.GetPrescriptionByUserId(userId)).Adapt<List<PrescriptionDto>>());
+
+    public async Task<PrescriptionDto> UpdatePrescription(PrescriptionDto prescription)
+    {
+        Prescription model = prescription.Adapt<Prescription>();
+        return await Execute(async () => (await _prescriptionService.UpdatePrescription(model)).Adapt<PrescriptionDto>());
+    }
+
+    public async Task DeletePrescription(Guid id) => 
         await Execute(async () => await _prescriptionService.DeletePrescription(id));
 
     private async Task Execute(Func<Task> function)
@@ -67,11 +57,6 @@ public class PrescriptionApiService : IPrescriptionApiService
         {
             await function();
         }
-        // catch (ApplicationValidationException validationException)
-        // {
-        //     logger.LogValidationException(validationException);
-        //     throw;
-        // }
         catch (Exception exception)
         {
             _logger.LogError("Critical error during execution! {exception}", exception.Message);
@@ -85,11 +70,6 @@ public class PrescriptionApiService : IPrescriptionApiService
         {
             return await function();
         }
-        // catch (ApplicationValidationException validationException)
-        // {
-        //     logger.LogValidationException(validationException);
-        //     throw;
-        // }
         catch (Exception exception)
         {
             _logger.LogError("Critical error during execution! {exception}", exception.Message);

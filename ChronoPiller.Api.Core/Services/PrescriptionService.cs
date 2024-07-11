@@ -1,4 +1,5 @@
 ﻿using ChronoPiller.Api.Core.Entities;
+using ChronoPiller.Api.Core.Exceptions;
 using ChronoPiller.Api.Core.Interface;
 
 namespace ChronoPiller.Api.Core.Services;
@@ -12,14 +13,17 @@ public class PrescriptionService : IPrescriptionService
         _prescriptionRepository = prescriptionRepository;
     }
 
-    public async Task<Prescription> CreatePrescription(Prescription prescription)
-    {
-        return await _prescriptionRepository.CreatePrescription(prescription);
-    }
+    public Task<Prescription> CreatePrescription(Prescription prescription) => 
+        _prescriptionRepository.CreatePrescription(prescription);
 
-    public async Task<Prescription> GetPrescriptionById(int id)
+    public async Task<Prescription> GetPrescriptionById(Guid id)
     {
-        return await _prescriptionRepository.GetPrescriptionById(id);
+        Prescription? result = 
+            await _prescriptionRepository.GetPrescriptionById(id);
+        if (result is null)
+            throw new NotFoundException();
+
+        return result;
     }
 
     public Task<Prescription> UpdatePrescription(Prescription prescription)
@@ -27,13 +31,9 @@ public class PrescriptionService : IPrescriptionService
         throw new NotImplementedException();
     }
 
-    public async Task DeletePrescription(int id)
-    {
-        await _prescriptionRepository.DeletePrescription(id);
-    }
+    public Task DeletePrescription(Guid id) => 
+        _prescriptionRepository.DeletePrescription(id);
 
-    public async Task<List<Prescription>> GetPrescriptionByUserId(int userId)
-    {
-        return await _prescriptionRepository.GetPrescriptionsByUserId(userId);
-    }
+    public Task<List<Prescription>> GetPrescriptionByUserId(Guid userId) => 
+        _prescriptionRepository.GetPrescriptionsByUserId(userId);
 }

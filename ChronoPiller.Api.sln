@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Api", "ChronoP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Api.Core", "ChronoPiller.Api.Core\ChronoPiller.Api.Core.csproj", "{84A214DC-1DB2-45DE-AAFD-78BCD6696B83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Infrastructure", "ChronoPiller.Infrastructure\ChronoPiller.Infrastructure.csproj", "{088578B7-8D45-492C-8C95-2CA132562D8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Api.Infrastructure", "ChronoPiller.Api.Infrastructure\ChronoPiller.Api.Infrastructure.csproj", "{088578B7-8D45-492C-8C95-2CA132562D8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

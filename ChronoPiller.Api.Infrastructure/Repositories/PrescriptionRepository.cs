@@ -1,4 +1,5 @@
 ﻿using ChronoPiller.Api.Core.Entities;
+using ChronoPiller.Api.Core.Exceptions;
 using ChronoPiller.Api.Core.Interface;
 using ChronoPiller.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,8 @@ public class PrescriptionRepository : IPrescriptionRepository
 {
     private readonly ApplicationDbContext _applicationDbContext;
 
-    public PrescriptionRepository(ApplicationDbContext applicationDbContext)
-    {
+    public PrescriptionRepository(ApplicationDbContext applicationDbContext) => 
         _applicationDbContext = applicationDbContext;
-    }
 
     public async Task<Prescription> CreatePrescription(Prescription prescription)
     {
@@ -21,10 +20,10 @@ public class PrescriptionRepository : IPrescriptionRepository
         return prescription;
     }
 
-    public async Task<Prescription> GetPrescriptionById(int id)
-    {
-        return await _applicationDbContext.Prescriptions.FirstAsync(p => p.Id == id);
-    }
+    public async Task<Prescription?> GetPrescriptionById(Guid id) =>
+        await _applicationDbContext.Prescriptions
+            .Include(pres => pres.Items)
+            .FirstOrDefaultAsync(p => p.Id == id);
 
     public async Task<Prescription> UpdatePrescription(Prescription prescription)
     {
@@ -33,15 +32,18 @@ public class PrescriptionRepository : IPrescriptionRepository
         return prescription;
     }
 
-    public async Task DeletePrescription(int id)
+    public async Task DeletePrescription(Guid id)
     {
-        var prescription = await _applicationDbContext.Prescriptions.FindAsync(id);
+        Prescription? prescription = 
+            await _applicationDbContext.Prescriptions.FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
+        if (prescription is null)
+            throw new NotFoundException();
         _applicationDbContext.Prescriptions.Remove(prescription);
         await _applicationDbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Prescription>> GetPrescriptionsByUserId(int userId)
-    {
-        return await _applicationDbContext.Prescriptions.Where(p => p.UserId == userId).ToListAsync();
-    }
+    public async Task<List<Prescription>> GetPrescriptionsByUserId(Guid userId) =>
+        await Queryable.Where(_applicationDbContext.Prescriptions
+                .Include(pres => pres.Items), p => p.UserId == userId)
+            .ToListAsync();
 }

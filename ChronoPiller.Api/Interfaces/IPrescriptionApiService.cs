@@ -5,9 +5,9 @@ namespace ChronoPiller.Api.Interfaces;
 
 public interface IPrescriptionApiService
 {
-    Task<Prescription> CreatePrescription(PrescriptionDto prescription);
-    Task<Prescription> GetPrescriptionById(int id);
-    Task<List<Prescription>> GetPrescriptionByUserId(int userId);     
-    Task<Prescription> UpdatePrescription(PrescriptionDto prescription);
-    Task DeletePrescription(int id);
+    Task<Prescription> CreatePrescription(PrescriptionCreateDto prescription);
+    Task<PrescriptionDto> GetPrescriptionById(Guid id);
+    Task<List<PrescriptionDto>> GetPrescriptionsByUserId(Guid userId);     
+    Task<PrescriptionDto> UpdatePrescription(PrescriptionDto prescription);
+    Task DeletePrescription(Guid id);
 }

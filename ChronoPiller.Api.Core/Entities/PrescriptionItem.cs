@@ -2,7 +2,7 @@
 
 public class PrescriptionItem : BaseEntity
 {
+    public Guid PrescriptionId { get; set; }
     public string MedicationName { get; set; }
-    public double Dose { get; set; }
-    public List<TimeSpan> Times { get; set; } = new();
+    public List<Dosage> Doses { get; set; } = new();
 }
