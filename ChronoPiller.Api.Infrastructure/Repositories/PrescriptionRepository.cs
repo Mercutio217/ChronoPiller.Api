@@ -22,7 +22,8 @@ public class PrescriptionRepository : IPrescriptionRepository
 
     public async Task<Prescription?> GetPrescriptionById(Guid id) =>
         await _applicationDbContext.Prescriptions
-            .Include(pres => pres.Items)
+            .Include(pres => pres.Items)!
+            .ThenInclude(it => it.Doses)
             .FirstOrDefaultAsync(p => p.Id == id);
 
     public async Task<Prescription> UpdatePrescription(Prescription prescription)
@@ -44,6 +45,21 @@ public class PrescriptionRepository : IPrescriptionRepository
 
     public async Task<List<Prescription>> GetPrescriptionsByUserId(Guid userId) =>
         await Queryable.Where(_applicationDbContext.Prescriptions
-                .Include(pres => pres.Items), p => p.UserId == userId)
+                .Include(pres => pres.Items)
+                .ThenInclude(it => it.Doses), p => p.UserId == userId)
             .ToListAsync();
+
+    public Task SubstractPrescriptionItemCount(Guid prescriptionItemId, int pillsCount)
+    {
+        var prescriptionItem = _applicationDbContext.PrescriptionItems
+            .FirstOrDefault(presItem => presItem.Id == prescriptionItemId);
+
+        if (prescriptionItem == null)
+        {
+            throw new NotFoundException();
+        }
+        prescriptionItem.CurrentBoxCount -= pillsCount;
+
+        return _applicationDbContext.SaveChangesAsync();
+    }
 }

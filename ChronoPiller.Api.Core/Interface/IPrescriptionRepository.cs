@@ -9,4 +9,5 @@ public interface IPrescriptionRepository
     Task<Prescription> UpdatePrescription(Prescription prescription);
     Task DeletePrescription(Guid id);
     Task<List<Prescription>> GetPrescriptionsByUserId(Guid userId);
+    Task SubstractPrescriptionItemCount(Guid prescriptionItemId, int pillsCount);
 }

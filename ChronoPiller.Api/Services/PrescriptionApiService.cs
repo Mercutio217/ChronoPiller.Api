@@ -2,6 +2,7 @@
 using ChronoPiller.Api.Core.Interface;
 using ChronoPiller.Api.Interfaces;
 using ChronoPiller.Api.Models;
+using ChronoPiller.Api.Models.CreateRequest;
 using Mapster;
 
 namespace ChronoPiller.Api.Services;
@@ -50,6 +51,11 @@ public class PrescriptionApiService : IPrescriptionApiService
 
     public async Task DeletePrescription(Guid id) => 
         await Execute(async () => await _prescriptionService.DeletePrescription(id));
+
+    public async Task SubtractPills(Guid prescriptionItemId, int pillsCount)
+    {
+        await _prescriptionService.SubstractPrescriptionItemCount(prescriptionItemId, pillsCount);
+    }
 
     private async Task Execute(Func<Task> function)
     {

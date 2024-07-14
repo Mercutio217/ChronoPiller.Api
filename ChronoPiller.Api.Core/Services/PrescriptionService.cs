@@ -36,4 +36,9 @@ public class PrescriptionService : IPrescriptionService
 
     public Task<List<Prescription>> GetPrescriptionByUserId(Guid userId) => 
         _prescriptionRepository.GetPrescriptionsByUserId(userId);
+
+    public Task SubstractPrescriptionItemCount(Guid prescriptionItemId, int pillsCount)
+    {
+        return _prescriptionRepository.SubstractPrescriptionItemCount(prescriptionItemId, pillsCount);
+    }
 }

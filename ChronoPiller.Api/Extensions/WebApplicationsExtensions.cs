@@ -1,6 +1,7 @@
 using ChronoPiller.Api.Core.Exceptions;
 using ChronoPiller.Api.Interfaces;
 using ChronoPiller.Api.Models;
+using ChronoPiller.Api.Models.CreateRequest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,49 @@ public static class WebApplicationsExtensions
         MapAuthorizationEndpoints();
         MapUsersEndpoints();
         MapPrescriptionsEndpoints();
-        
+        application.MapPost("/prescription-items/{id}/count", async (IPrescriptionApiService prescriptionApiService, Guid prescriptionItemId, int pillsCount) =>
+        {
+            return await ExecuteWithErrorHandling(async () =>
+            {
+                await prescriptionApiService.SubtractPills(prescriptionItemId, pillsCount);
+                return Results.Ok();   
+            });
+        });
+        application.MapGet("users/{userId}/notification-schedules/", async (INotificationScheduleApiService notificationScheduleApiService, Guid userId) =>
+        {
+            return await ExecuteWithErrorHandling(async () =>
+            {
+                List<NotificationScheduleDto?> schedules = await notificationScheduleApiService.GetAllNotificationSchedulesByUserId(userId);
+                return Results.Ok(schedules);
+            });
+        });
+
+        application.MapPost("/notification-schedules", async (INotificationScheduleApiService notificationScheduleApiService, NotificationScheduleDto notification) =>
+        {
+            return await ExecuteWithErrorHandling(async () =>
+            {
+                await notificationScheduleApiService.AddNotification(notification);
+                return Results.Ok();
+            });
+        });
+
+        application.MapPut("/notification-schedules", async (INotificationScheduleApiService notificationScheduleApiService, NotificationScheduleDto notification) =>
+        {
+            return await ExecuteWithErrorHandling(async () =>
+            {
+                await notificationScheduleApiService.UpdateNotification(notification);
+                return Results.Ok();
+            });
+        });
+
+        application.MapDelete("/notification-schedules/{id}", async (INotificationScheduleApiService notificationScheduleApiService, Guid id) =>
+        {
+            return await ExecuteWithErrorHandling(async () =>
+            {
+                await notificationScheduleApiService.DeleteNotification(id);
+                return Results.Ok();
+            });
+        });
         void MapPrescriptionsEndpoints()
         {
             application.MapGet("/prescriptions/{id}", async (IPrescriptionApiService prescriptionApiService, Guid id) =>
@@ -113,6 +156,17 @@ public static class WebApplicationsExtensions
                     return Results.Ok();
                 }));
         }
+
+         void MapNotificationsEndpoints()
+         {            
+             application.MapPut("/notifications", 
+             async (IUserManagementService usersService, [FromBody] UserUpdateRequest request) => await ExecuteWithErrorHandling(async () =>
+             {
+                 await usersService.UpdateUser(request);
+                 return Results.Ok();
+             }));
+             
+         }
         
         async Task<IResult> ExecuteWithErrorHandling(Func<Task<IResult>> function)
         {
@@ -123,6 +177,10 @@ public static class WebApplicationsExtensions
             catch (UserAlreadyExistsException)
             {
                 return Results.Conflict();
+            }
+            catch (UnauthorizedException)
+            {
+                return Results.Unauthorized();
             }
             catch (AuthenticationException)
             {
@@ -140,7 +198,7 @@ public static class WebApplicationsExtensions
             {
                 return Results.NotFound();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return Results.StatusCode(StatusCodes.Status500InternalServerError);
             }

@@ -16,12 +16,14 @@ public class ApplicationDbContext : DbContext
         _databaseOptions = options.Value;
     }
     public DbSet<Prescription> Prescriptions { get; set; }
+    public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
 
+    public DbSet<NotificationSchedule> NotificationSchedules { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // optionsBuilder.UseInMemoryDatabase("ChronoPillerDb");
         optionsBuilder.UseSqlServer("Server=localhost;Database=ChronoPillerDb;TrustServerCertificate=true;Integrated Security=SSPI;", options => options.EnableRetryOnFailure());
         base.OnConfiguring(optionsBuilder);
     }
@@ -34,11 +36,12 @@ public class ApplicationDbContext : DbContext
         builder.Entity<Prescription>().ToTable("Prescriptions");
         
         builder.Entity<PrescriptionItem>().HasKey(p => p.Id);
+        builder.Entity<PrescriptionItem>().HasOne(p => p.NotificationSchedule);
         builder.Entity<PrescriptionItem>().ToTable("PrescriptionItems");
-        builder.Entity<PrescriptionItem>().Property(p => p.Doses).HasConversion(
-            prop => JsonSerializer.Serialize(prop, new JsonSerializerOptions()), 
-            prop => JsonSerializer.Deserialize<List<Dosage>>(prop, new JsonSerializerOptions())!);
-        
+        builder.Entity<PrescriptionItem>().HasMany(p => p.Doses).WithOne();
+        builder.Entity<Dosage>().HasKey(d => d.Id);
+        builder.Entity<NotificationSchedule>().HasKey(n => n.Id);
+
         builder.Entity<User>()
             .Property(us => us.Email)
             .HasMaxLength(50);
@@ -73,6 +76,7 @@ public class ApplicationDbContext : DbContext
         builder.Entity<Role>()
             .Property(r => r.Name)
             .HasMaxLength(25);
+
         base.OnModelCreating(builder);
     }
 }

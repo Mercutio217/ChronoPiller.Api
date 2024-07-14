@@ -79,6 +79,10 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserManagementService, UserManagementService>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 builder.Services.AddScoped<IPrescriptionApiService, PrescriptionApiService>();
+builder.Services.AddScoped<INotificationScheduleRepository, NotificationScheduleRepository>();
+builder.Services.AddScoped<INotificationScheduleService, NotificationScheduleService>();
+builder.Services.AddScoped<INotificationScheduleApiService, NotificationScheduleApiService>();
+
 builder.Services.RegisterMapsterConfiguration();
 
 var app = builder.Build();

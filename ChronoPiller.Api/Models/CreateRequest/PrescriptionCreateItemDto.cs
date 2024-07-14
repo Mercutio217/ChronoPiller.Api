@@ -1,7 +1,6 @@
-namespace ChronoPiller.Api.Models;
+﻿namespace ChronoPiller.Api.Models.CreateRequest;
 
-public record PrescriptionItemDto(
-    Guid Id,
+public record PrescriptionCreateItemDto(
     string MedicationName,
     int BoxSize,
     int CurrentBoxCount,

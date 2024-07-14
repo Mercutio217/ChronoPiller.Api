@@ -1,5 +1,6 @@
 using ChronoPiller.Api.Core.Entities;
 using ChronoPiller.Api.Models;
+using ChronoPiller.Api.Models.CreateRequest;
 using Mapster;
 
 namespace ChronoPiller.Api;
@@ -14,8 +15,11 @@ public static class MapsterConfiguration
             {
                 Doses = item.Doses.Adapt<List<Dosage>>(),
                 MedicationName = item.MedicationName,
+                BoxSize = item.BoxSize,
+                CurrentBoxCount = item.CurrentBoxCount,
+                Id = Guid.NewGuid()
             }).ToList());
-        
+
         TypeAdapterConfig<DosageDto, Dosage>
             .NewConfig()
             .Map(dest => dest.DosageTime, src => MapDosageTimeDto(src.DosageTime));
