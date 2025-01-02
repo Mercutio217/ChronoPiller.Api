@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>ChronoPiller.Authorization.Core</RootNamespace>
+        <AssemblyName>ChronoPiller.Authorization.Core</AssemblyName>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ChronoPiller.Shared" Version="1.0.2" />
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+</Project>
