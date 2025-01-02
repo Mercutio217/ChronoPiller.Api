@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>ChronoPiller.Shared</RootNamespace>
+        <PackageOutputPath>..\nuget</PackageOutputPath>
+        <Version>1.0.3</Version>
+        <Title>ChrnoPiller.Shared</Title>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>..\build\ChronoPiller.Shared\Debug\</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\build\ChronoPiller.Shared\Release\</OutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
+    </ItemGroup>
+</Project>
