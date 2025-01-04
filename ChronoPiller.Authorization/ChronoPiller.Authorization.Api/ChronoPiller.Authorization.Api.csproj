@@ -16,5 +16,6 @@
     <ItemGroup>
       <ProjectReference Include="..\ChronoPIler.Authorization.Infrastructure\ChronoPiller.Authorization.Infrastructure.csproj" />
       <ProjectReference Include="..\ChronoPiller.Authorization.Core\ChronoPiller.Authorization.Core.csproj" />
+      <ProjectReference Include="..\ChronoPiller.Authorization.Infrastructure\ChronoPiller.Authorization.Infrastructure.csproj" />
     </ItemGroup>
 </Project>

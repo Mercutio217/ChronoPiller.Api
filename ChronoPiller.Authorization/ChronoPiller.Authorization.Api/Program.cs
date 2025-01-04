@@ -55,7 +55,7 @@ void SetupDatabase()
         var adminUser = 
             User.Create("sg@gmail.com","Gul" ,"Skrain", "Dukat");
     
-        adminUser.PasswordHash = "799DBF90EE52688EB50516DE263415C05207AD00866860331795784F1EC950CF";
+        adminUser.PasswordHash = "799DBF90EE52688EB50516DE263415C05207AD00866860331795784F1EC950CF"; //bajorSux
         database.Users.Add(adminUser);
     }
 
