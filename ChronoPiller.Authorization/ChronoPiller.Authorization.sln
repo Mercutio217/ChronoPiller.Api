@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Authorization.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Authorization.Api", "ChronoPiller.Authorization.Api\ChronoPiller.Authorization.Api.csproj", "{D78FBD41-DE22-4A0C-B97A-35552E509FAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Authorization.Infrastructure", "ChronoPIler.Authorization.Infrastructure\ChronoPiller.Authorization.Infrastructure.csproj", "{C0D75FF3-43E2-48BA-91B9-DDCD2F7829B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Authorization.Infrastructure", "ChronoPiller.Authorization.Infrastructure\ChronoPiller.Authorization.Infrastructure.csproj", "{C0D75FF3-43E2-48BA-91B9-DDCD2F7829B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

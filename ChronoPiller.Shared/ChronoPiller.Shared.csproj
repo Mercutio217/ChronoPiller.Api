@@ -3,7 +3,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>ChronoPiller.Shared</RootNamespace>
         <PackageOutputPath>..\nuget</PackageOutputPath>
-        <Version>1.0.3</Version>
+        <Version>1.0.5</Version>
         <Title>ChrnoPiller.Shared</Title>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -1,7 +1,7 @@
 using ChronoPiller.Authorization.Api.Interfaces;
-using ChronoPiller.Authorization.Api.Services;
 using ChronoPiller.Authorization.Core.Models;
 using ChronoPiller.Shared.Abstractions;
+using ChronoPiller.Shared.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChronoPiller.Authorization.Api.Controllers
@@ -15,7 +15,7 @@ namespace ChronoPiller.Authorization.Api.Controllers
         {
             return await ExecuteWithErrorHandling(async () =>
             {
-                TokenResponse result = await userService.Login(model);
+                ChronoTokenData result = await userService.Login(model);
                 return Ok(result);
             });
         }

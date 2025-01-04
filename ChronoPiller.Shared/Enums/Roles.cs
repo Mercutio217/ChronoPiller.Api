@@ -1,4 +1,4 @@
-namespace DefaultNamespace;
+namespace ChronoPiller.Shared.Enums;
 
 public enum Roles
 {

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ChronoPiller.Infrastructure</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ChronoPiller.Shared" Version="1.0.3" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ChronoPiller.Prescriptions.Core\ChronoPiller.Prescriptions.Core.csproj" />
+    </ItemGroup>
+
+</Project>

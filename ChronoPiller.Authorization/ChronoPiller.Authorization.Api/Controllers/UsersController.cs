@@ -1,6 +1,11 @@
 using ChronoPiller.Authorization.Api.Interfaces;
+using ChronoPiller.Authorization.Api.Models;
+using ChronoPiller.Authorization.Core.DTOs;
 using ChronoPiller.Authorization.Core.Models;
+using ChronoPiller.Authorization.Core.Models.Filters;
 using ChronoPiller.Shared.Abstractions;
+using ChronoPiller.Shared.Authorization;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +13,7 @@ namespace ChronoPiller.Authorization.Api.Controllers
 {
     [ApiController]
     [Route("users")]
-    public class UsersController(IUserManagementService userService) : ChronoBaseController
+    public class UsersController(IUserApiService userService) : ChronoBaseController
     {
         [HttpGet]
         [Authorize]
@@ -16,25 +21,26 @@ namespace ChronoPiller.Authorization.Api.Controllers
         {
             return await ExecuteWithErrorHandling(async () =>
             {
-                IEnumerable<UserResponse> result = await userService.GetByFilterAsync(model);
+                var filter = model.Adapt<UserFilter>();
+                IEnumerable<ChronoUserResponse> result = await userService.GetByFilterAsync(filter);
                 return Ok(result.ToList());
             });
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<IActionResult> GetUserById(Guid id)
+        public async Task<IActionResult> GetUserById(int id)
         {
             return await ExecuteWithErrorHandling(async () =>
             {
-                UserResponse result = await userService.GetById(id);
+                ChronoUserResponse result = await userService.GetById(id);
                 return Ok(result);
             });
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             return await ExecuteWithErrorHandling(async () =>
             {
@@ -48,7 +54,8 @@ namespace ChronoPiller.Authorization.Api.Controllers
         {
             return await ExecuteWithErrorHandling(async () =>
             {
-                await userService.UpdateUser(request);
+                var model = request.Adapt<UserUpdateModel>();
+                await userService.UpdateUser(model);
                 return Ok();
             });
         }

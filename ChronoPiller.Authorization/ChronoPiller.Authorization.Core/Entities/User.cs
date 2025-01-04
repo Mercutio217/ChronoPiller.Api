@@ -1,7 +1,7 @@
 ﻿using ChronoPiller.Authorization.Core.DTOs;
 using ChronoPiller.Shared.Abstractions;
+using ChronoPiller.Shared.Enums;
 using ChronoPiller.Shared.Exceptions;
-using DefaultNamespace;
 
 namespace ChronoPiller.Authorization.Core.Entities;
 

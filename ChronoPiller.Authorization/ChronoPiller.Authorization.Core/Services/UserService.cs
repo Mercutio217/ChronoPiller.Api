@@ -11,8 +11,9 @@ using ChronoPiller.Authorization.Core.Entities;
 using ChronoPiller.Authorization.Core.Interface;
 using ChronoPiller.Authorization.Core.Models;
 using ChronoPiller.Authorization.Core.Models.Filters;
+using ChronoPiller.Shared.Authorization;
+using ChronoPiller.Shared.Enums;
 using ChronoPiller.Shared.Exceptions;
-using DefaultNamespace;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -42,7 +43,7 @@ public class UserService(
     }
 
 
-    public async Task<TokenResponse> Login(LoginModel model)
+    public async Task<ChronoTokenData> Login(LoginModel model)
     {
         return await Execute(async () =>
         {
@@ -57,6 +58,7 @@ public class UserService(
 
             var claims = new List<Claim>()
             {
+                new (ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Name, user.UserName),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new (ClaimTypes.Role, user.Role.ToString())
@@ -64,7 +66,7 @@ public class UserService(
 
             var token = GetToken(claims);
             
-            return new TokenResponse()
+            return new ChronoTokenData()
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -73,7 +75,7 @@ public class UserService(
                 UserName = user.UserName,
                 ExpiresAt = token.ValidTo,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Role = user.Role.ToString()
+                Role = user.Role
             };
         });
     }
@@ -81,7 +83,6 @@ public class UserService(
     public async Task<IEnumerable<User>> GetByFilterAsync(UserFilter filterRequest) =>
         await Execute(async () =>
         {
-            // .Adapt<IEnumerable<UserResponse>>()
             var result = (await repository.GetUserByFilter(filterRequest));
             return result;
         });
