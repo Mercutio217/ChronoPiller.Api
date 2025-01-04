@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Prescriptions.Api", "ChronoPiller.Prescriptions.Api\ChronoPiller.Prescriptions.Api.csproj", "{5F979B63-0BBC-4118-AFB7-4C97CDF33C72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Prescriptions.Core", "ChronoPiller.Prescriptions.Core\ChronoPiller.Prescriptions.Core.csproj", "{81DADC05-3C7E-4A66-9A26-4828A1DF6E57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPiller.Prescriptions.Infrastructure", "ChronoPiller.Prescriptions.Infrastructure\ChronoPiller.Prescriptions.Infrastructure.csproj", "{31AAE4DC-D0AC-4972-98A0-933D9F88E554}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F979B63-0BBC-4118-AFB7-4C97CDF33C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F979B63-0BBC-4118-AFB7-4C97CDF33C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F979B63-0BBC-4118-AFB7-4C97CDF33C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F979B63-0BBC-4118-AFB7-4C97CDF33C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81DADC05-3C7E-4A66-9A26-4828A1DF6E57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81DADC05-3C7E-4A66-9A26-4828A1DF6E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81DADC05-3C7E-4A66-9A26-4828A1DF6E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81DADC05-3C7E-4A66-9A26-4828A1DF6E57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31AAE4DC-D0AC-4972-98A0-933D9F88E554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31AAE4DC-D0AC-4972-98A0-933D9F88E554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31AAE4DC-D0AC-4972-98A0-933D9F88E554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31AAE4DC-D0AC-4972-98A0-933D9F88E554}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
